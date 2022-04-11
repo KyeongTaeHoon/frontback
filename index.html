@@ -96,29 +96,7 @@
   <div class="album py-5 bg-light">
     <div class="container">
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        
-        <% for(var i = 0; i<num; i++){ %>
-        <div class="col">
-          <div class="card shadow-sm">
-            
-            <img src="<%=body[i].image%>" class="img-fluid" alt="...">
-
-            <div class="card-body">
-              <p class="card-text"><%= body[i].data1 %>
-                <p><%= body[i].data2 %></p>
-                <p><%= body[i].data3 %>			
-                <p><%= body[i].data4 %>
-                <p><%= body[i].data5 %></p>
-                      <button id="view<%=i+1%>" class="btn-x" data-userid = "100" data-itemid = "<%= body[i].id%>" data-eventtype = "watch" >장바구니</button>
-
-                <small class="text-muted">!Event!</small>
-              </div>
-            </div>
-          </div>
-          <% } %>
-        
-        
+      <div id="main" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">        
       </div>
     </div>
   </div>

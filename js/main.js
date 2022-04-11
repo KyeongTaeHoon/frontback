@@ -1,18 +1,14 @@
 /*conatiner*/
-const container = document.querySelector(".container");
+const main = document.querySelector("#main");
 /*popup*/
 const popup = document.querySelector(".popup");
 /*closeBtn*/
 const closeBtn = document.querySelector("#closebtn");
 /*팝업 닫기 함수*/
 const closePopup = () => {
-console.log("test2")
-
-
-
-/*hide 클래스 추가로 숨김*/
-popup.classList.add("hide");
-  //location.reload();
+  /*hide 클래스 추가로 숨김*/
+  popup.classList.add("hide");
+  location.reload();
 
 };
 /*popup 열기*/
@@ -47,96 +43,52 @@ closeBtn.addEventListener("click", (event) => {
 
 });
 /*HTML 동적으로 만들기*/
-const makeHtml = (userid, itemid, eventtype) => {
-  return `
-  <div class="cardbox">
-    <p>${userid}</p>
-    <p>${itemid}</p>
-    <p>${eventtype}</p>
-    <div>
-      <button class="btn-page" data-capital =${capital} data-language = ${language} data-nationality=${nationality}>Move Page!</button>
-      <button class="btn-pop" data-capital =${capital} data-language = ${language} data-nationality=${nationality}>Open pop!</button>
-    </div>
-  </div>`;
+const makeHtml = (item) => {
+  return `<div class="col">
+          <div class="card shadow-sm">
+            <img src="${item.image}" class="img-fluid" alt="...">
+            <div class="card-body">
+              <p class="card-text">${item.data1}
+                <p>${item.data2}</p>
+                <p>${item.data3}</p>		
+                <p>${item.data4}</p>
+                <p>${item.data5}</p>
+                    <button id="view<%=i+1%>" class="btn-x" data-userid = "100" data-itemid = "${item.id}" data-eventtype = "watch" >장바구니</button>
+                <small class="text-muted">!Event!</small>
+              </div>
+            </div>
+          </div>`
 };
 /*시작 외부 api 데이터 가져오기 async는 비동기 함수로 큰 데이터를 가져올때 비동기 처리를 위해 사용*/
-/*const init = async () => {
-  const result = await fetch('/getlist', {
-    method: 'POST', // or 'PUT'
-    body: JSON.stringify({ userId :100,numResults:9,campaignArn: 'arn:aws:personalize:us-east-1:593182458133:campaign/poc-campaign' }), // data can be `string` or {object}!
-    headers: {
-      'Content-Type': 'application/json'
-    }});
-  const data = await result.json();
-
-  console.log(result)
-  const htmlArr = data.map(({ capital, language, nationality }) => {
-    return makeHtml(capital, language, nationality);
-  });
-  container.innerHTML = htmlArr.join("");
+const init = async () => {
+  let htmlArr = [];
+  try {
+    const result = await fetch('/'); // or 'PUT'
+    const data = await result.json();
+    htmlArr = data.map((item) => {
+      return makeHtml(item);
+    });
+    await setEvent();
+    main.innerHTML = htmlArr.join("");
+  } catch (error) {
+    main.innerHTML = `<div>Server error</div>`;
+    console.log(error);
+  }
 };
-const cart = document.querySelector("#cart");
+const setEvent = async () => {
+    //ryz
+  for (var i =1; i<10; i++){
 
+    const view = document.querySelector("#view" + i);
+    view.addEventListener('click', (event) => {
 
-*/
-/*
-const view1 = document.querySelector("#view1");
-
-view1.addEventListener('click', (event) => {
-  const id = event.target.getAttribute("class");
-
-  const userid = event?.target?.dataset?.userid;
-console.log(userid)
-  const itemid = event?.target?.dataset?.itemid;
-
-const eventtype = event?.target?.dataset?.eventtype;
-
-openPopup(userid, itemid, eventtype);
-
-
-});
-const view2 = document.querySelector("#view2");
-
-view2.addEventListener('click', (event) => {
-  const id = event.target.getAttribute("class");
-
-  const userid = event?.target?.dataset?.userid;
-console.log(userid)
-  const itemid = event?.target?.dataset?.itemid;
-
-const eventtype = event?.target?.dataset?.eventtype;
-
-openPopup(userid, itemid, eventtype);
-});
-
-const view3 = document.querySelector("#view3");
-
-view3.addEventListener('click', (event) => {
-  const id = event.target.getAttribute("class");
-
-  const userid = event?.target?.dataset?.userid;
-console.log(userid)
-  const itemid = event?.target?.dataset?.itemid;
-
-const eventtype = event?.target?.dataset?.eventtype;
-
-openPopup(userid, itemid, eventtype);
-});
-*/
-
-
-//ryz
-for (var i =1; i<10; i++){
-
-  const view = document.querySelector("#view" + i);
-  view.addEventListener('click', (event) => {
-
-    const userid = event?.target?.dataset?.userid;
-    const itemid = event?.target?.dataset?.itemid;
-    const eventtype = event?.target?.dataset?.eventtype;
-  
-  openPopup(userid, itemid, eventtype);
-  });
+      const userid = event?.target?.dataset?.userid;
+      const itemid = event?.target?.dataset?.itemid;
+      const eventtype = event?.target?.dataset?.eventtype;
+    
+    openPopup(userid, itemid, eventtype);
+    });
+  }
 }
 //
 
