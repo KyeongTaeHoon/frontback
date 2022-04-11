@@ -4,6 +4,7 @@ const main = document.querySelector("#main");
 const popup = document.querySelector(".popup");
 /*closeBtn*/
 const closeBtn = document.querySelector("#closebtn");
+const baseurl = 'http://3.35.54.188:8080/';
 /*팝업 닫기 함수*/
 const closePopup = () => {
   /*hide 클래스 추가로 숨김*/
@@ -14,7 +15,7 @@ const closePopup = () => {
 /*popup 열기*/
 const openPopup = async (userid, itemid, eventtype) => {
   
-  const result = await fetch('/user-inter', {
+  const result = await fetch(`${baseurl}/user-inter`, {
     method: 'POST', // or 'PUT'
     body: JSON.stringify({ userid, itemid, eventtype }), // data can be `string` or {object}!
     headers: {
@@ -63,7 +64,7 @@ const makeHtml = (item) => {
 const init = async () => {
   let htmlArr = [];
   try {
-    const result = await fetch('/'); // or 'PUT'
+    const result = await fetch(`${baseurl}/`); // or 'PUT'
     const data = await result.json();
     htmlArr = data.map((item) => {
       return makeHtml(item);
