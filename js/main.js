@@ -4,7 +4,7 @@ const main = document.querySelector("#main");
 const popup = document.querySelector(".popup");
 /*closeBtn*/
 const closeBtn = document.querySelector("#closebtn");
-const baseurl = 'http://13.125.184.176:8080';
+const baseurl = 'http://octank-alb-1885737238.ap-northeast-2.elb.amazonaws.com';
 /*팝업 닫기 함수*/
 const closePopup = () => {
   /*hide 클래스 추가로 숨김*/
