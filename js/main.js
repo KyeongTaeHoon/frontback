@@ -4,7 +4,7 @@ const main = document.querySelector("#main");
 const popup = document.querySelector(".popup");
 /*closeBtn*/
 const closeBtn = document.querySelector("#closebtn");
-const baseurl = 'http://3.35.54.188:8080/';
+const baseurl = 'http://13.125.184.176:8080';
 /*팝업 닫기 함수*/
 const closePopup = () => {
   /*hide 클래스 추가로 숨김*/
@@ -69,27 +69,21 @@ const init = async () => {
     htmlArr = data.map((item) => {
       return makeHtml(item);
     });
-    await setEvent();
     main.innerHTML = htmlArr.join("");
   } catch (error) {
     main.innerHTML = `<div>Server error</div>`;
     console.log(error);
   }
 };
-const setEvent = async () => {
-    //ryz
-  for (var i =1; i<10; i++){
-
-    const view = document.querySelector("#view" + i);
-    view.addEventListener('click', (event) => {
-
-      const userid = event?.target?.dataset?.userid;
-      const itemid = event?.target?.dataset?.itemid;
-      const eventtype = event?.target?.dataset?.eventtype;
-    
+const setEvent = () => {
+  main.addEventListener('click', (event) => {
+  if (event.target.id !== main && event.target.id); {
+    const userid = event?.target?.dataset?.userid;
+    const itemid = event?.target?.dataset?.itemid;
+    const eventtype = event?.target?.dataset?.eventtype;
     openPopup(userid, itemid, eventtype);
-    });
   }
+  })
 }
 //
 
@@ -110,5 +104,6 @@ window.onpageshow = function (event) {
   } else {
     //alert("새로 열린 페이지");
     init();
+    setEvent();
   }
 };
